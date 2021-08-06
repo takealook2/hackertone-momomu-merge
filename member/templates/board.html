@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>게시판</h2><br>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">번호</th>
+        <th scope="col">카테고리</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성자</th>
+        <th scope="col">작성일</th>
+        <th scope="col">조회</th>
+        <th scope="col">스크랩</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for blog in blogs%}
+      <tr onclick="location.href='/blog/{{blog.id}}'">
+        <th scope="row">{{blog.id}}</th>
+        <td>카테고리</td>
+        <td>{{blog.title}}</td>
+        <td>{{blog.writer}}</td>
+        <td>{{blog.pub_date}}</td>
+        <td>조회</th>
+        <td>스크랩</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {%if blogs.has_previous%} 
+  <a href="?page=1">처음</a>
+  <a href="?page={{blogs.previous_page_number}}">이전</a>
+  {% endif %}
+  <span>{{blogs.number}}</span>
+  <span>of</span>
+  <span>{{blogs.paginator.num_pages}}</span>
+  {%if blogs.has_next%} 
+  <a href="?page={{blogs.next_page_number}}">다음</a>
+  <a href="?page={{blogs.paginator.num_pages}}">마지막</a>
+  {% endif %}
+
+    <!-- <div class="container">
+    {% for blog in blogs%}
+        <div>
+            <h4>{{blog.title}}</h4>
+            작성자: {{blog.writer}}
+            /
+            작성일: {{blog.pub_date}}
+            <br><br>
+            {{blog.body}} <a href="{%url 'detail' blog.id%}">...more</a>
+            <br>
+        </div><br>
+        {% endfor %}
+    </div> -->
+    <div>
+        <!-- <a href="{%url 'new'%}" >새글쓰기</a> -->
+        <!-- <button type="button" onclick="location.href='{%url 'new'%}'">새글쓰기</button> -->
+        <button type="button" class="btn btn-secondary" onclick="location.href='{%url 'new'%}'">새글쓰기</button>
+    </div>
+{% endblock %}
